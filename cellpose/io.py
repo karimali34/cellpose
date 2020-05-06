@@ -389,7 +389,8 @@ def _load_seg(parent, filename=None, image=None, image_file=None):
         try:
             print(parent.flows[0].shape)
         except:
-            parent.flows = parent.flows[0]
+            if parent.flows:
+                parent.flows = parent.flows[0]
 
     parent.enable_buttons()
     del dat

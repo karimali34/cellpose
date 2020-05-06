@@ -972,9 +972,13 @@ class MainW(QtGui.QMainWindow):
             vr = points[iz,1]
             vc = points[iz,2]
 
-            vr, vc = draw.polygon_perimeter(vr, vc, self.layers[z].shape[:2])
-            ar, ac = draw.polygon(vr, vc, self.layers[z].shape[:2])
-            ar, ac = np.hstack((np.vstack((vr, vc)), np.vstack((ar, ac))))
+            try:
+                vr, vc = draw.polygon_perimeter(vr, vc, self.layers[z].shape[:2])
+                ar, ac = draw.polygon(vr, vc, self.layers[z].shape[:2])
+                ar, ac = np.hstack((np.vstack((vr, vc)), np.vstack((ar, ac))))
+            except:
+                print('ERROR: Not enough points to draw polygon')
+                return None
             # if these pixels are overlapping with another cell, reassign them
             ioverlap = self.cellpix[z][ar, ac] > 0
             if (~ioverlap).sum() < 8:
